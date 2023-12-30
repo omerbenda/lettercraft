@@ -24,5 +24,7 @@
   "item.lettercraft.letter_w": "W",
   "item.lettercraft.letter_x": "X",
   "item.lettercraft.letter_y": "Y",
-  "item.lettercraft.letter_z": "Z"
+  "item.lettercraft.letter_z": "Z",
+
+  "creativetab.lettercraft.lettercrafttabtitle": "Lettercraft"
 }

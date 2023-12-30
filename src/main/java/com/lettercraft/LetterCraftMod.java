@@ -1,7 +1,7 @@
 package com.lettercraft;
 
+import com.lettercraft.item.ModCreativeModeTabs;
 import com.lettercraft.item.ModItems;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -28,7 +28,7 @@ public class LetterCraftMod {
   private void commonSetup(final FMLCommonSetupEvent event) {}
 
   private void addCreative(CreativeModeTabEvent.BuildContents event) {
-    if (event.getTab().equals(CreativeModeTabs.INGREDIENTS)) {
+    if (event.getTab().equals(ModCreativeModeTabs.LETTERCRAFT_TAB)) {
       event.accept(ModItems.LETTER_A);
       event.accept(ModItems.LETTER_B);
       event.accept(ModItems.LETTER_C);
