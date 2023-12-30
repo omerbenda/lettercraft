@@ -1,5 +1,6 @@
 package com.lettercraft;
 
+import com.lettercraft.block.ModBlocks;
 import com.lettercraft.item.ModCreativeModeTabs;
 import com.lettercraft.item.ModItems;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,6 +21,7 @@ public class LetterCraftMod {
   public LetterCraftMod() {
     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     ModItems.register(modEventBus);
+    ModBlocks.register(modEventBus);
     modEventBus.addListener(this::commonSetup);
     MinecraftForge.EVENT_BUS.register(this);
     modEventBus.addListener(this::addCreative);
@@ -29,6 +31,7 @@ public class LetterCraftMod {
 
   private void addCreative(CreativeModeTabEvent.BuildContents event) {
     if (event.getTab().equals(ModCreativeModeTabs.LETTERCRAFT_TAB)) {
+      event.accept(ModBlocks.LETTER_EXTRACTOR);
       event.accept(ModItems.LETTER_A);
       event.accept(ModItems.LETTER_B);
       event.accept(ModItems.LETTER_C);
