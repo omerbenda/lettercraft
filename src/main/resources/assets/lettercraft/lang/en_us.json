@@ -27,6 +27,7 @@
   "item.lettercraft.letter_z": "Z",
 
   "block.lettercraft.letter_extractor": "Letter Extractor",
+  "block.lettercraft.letter_combiner": "Letter Combiner",
 
   "creativetab.lettercraft.lettercrafttabtitle": "Lettercraft"
 }

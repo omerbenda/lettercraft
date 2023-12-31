@@ -1,6 +1,7 @@
 package com.lettercraft.block;
 
 import com.lettercraft.LetterCraftMod;
+import com.lettercraft.block.custom.LetterCombinerBlock;
 import com.lettercraft.block.custom.LetterExtractorBlock;
 import com.lettercraft.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +25,12 @@ public class ModBlocks {
           "letter_extractor",
           () ->
               new LetterExtractorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(6.0f)));
+
+  public static final RegistryObject<LetterCombinerBlock> LETTER_COMBINER =
+      registerBlock(
+          "letter_combiner",
+          () ->
+              new LetterCombinerBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(6.0f)));
 
   private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
     RegistryObject<T> toReturn = BLOCKS.register(name, block);

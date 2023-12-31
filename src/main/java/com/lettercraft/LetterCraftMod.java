@@ -32,6 +32,7 @@ public class LetterCraftMod {
   private void addCreative(CreativeModeTabEvent.BuildContents event) {
     if (event.getTab().equals(ModCreativeModeTabs.LETTERCRAFT_TAB)) {
       event.accept(ModBlocks.LETTER_EXTRACTOR);
+      event.accept(ModBlocks.LETTER_COMBINER);
       event.accept(ModItems.LETTER_A);
       event.accept(ModItems.LETTER_B);
       event.accept(ModItems.LETTER_C);
