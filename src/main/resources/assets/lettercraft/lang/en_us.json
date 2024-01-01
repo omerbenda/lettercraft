@@ -29,5 +29,7 @@
   "block.lettercraft.letter_extractor": "Letter Extractor",
   "block.lettercraft.letter_combiner": "Letter Combiner",
 
-  "creativetab.lettercraft.lettercrafttabtitle": "Lettercraft"
+  "creativetab.lettercraft.lettercrafttab_title": "Lettercraft",
+
+  "container.lettercraft.letter_combiner_title": "Letter Combiner"
 }

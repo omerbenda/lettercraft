@@ -1,8 +1,11 @@
 package com.lettercraft;
 
 import com.lettercraft.block.ModBlocks;
+import com.lettercraft.gui.LetterCombinerScreen;
+import com.lettercraft.gui.ModMenuTypes;
 import com.lettercraft.item.ModCreativeModeTabs;
 import com.lettercraft.item.ModItems;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -22,6 +25,7 @@ public class LetterCraftMod {
     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     ModItems.register(modEventBus);
     ModBlocks.register(modEventBus);
+    ModMenuTypes.register(modEventBus);
     modEventBus.addListener(this::commonSetup);
     MinecraftForge.EVENT_BUS.register(this);
     modEventBus.addListener(this::addCreative);
@@ -68,6 +72,8 @@ public class LetterCraftMod {
   @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
   public static class ClientModEvents {
     @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {}
+    public static void onClientSetup(FMLClientSetupEvent event) {
+      MenuScreens.register(ModMenuTypes.LETTER_COMBINER_MENU.get(), LetterCombinerScreen::new);
+    }
   }
 }
