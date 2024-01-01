@@ -3,13 +3,14 @@ package com.lettercraft.gui;
 import com.lettercraft.block.ModBlocks;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 
 public class LetterCombinerMenu extends AbstractContainerMenu {
+  private final CraftingContainer craftSlots = new CraftingContainer(this, 9, 1);
+  private final ResultContainer resultSlots = new ResultContainer();
   private final ContainerLevelAccess access;
+  private final Player player;
 
   public LetterCombinerMenu(int pContainerId, Inventory pPlayerInventory) {
     this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL);
@@ -20,8 +21,10 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     super(ModMenuTypes.LETTER_COMBINER_MENU.get(), pContainerId);
 
     this.access = pAccess;
+    this.player = pPlayerInventory.player;
     addInventorySlots(pPlayerInventory);
     addHotbarSlots(pPlayerInventory);
+    addCraftingSlots();
   }
 
   @Override
@@ -46,5 +49,18 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     for (int x = 0; x < 9; ++x) {
       this.addSlot(new Slot(pPlayerInventory, x, 8 + x * 18, 142));
     }
+  }
+
+  private void addCraftingSlots() {
+    int width = this.craftSlots.getWidth();
+    int height = this.craftSlots.getHeight();
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        this.addSlot(new Slot(this.craftSlots, x + y * width, 8 + x * 18, 20 + y * 18));
+      }
+    }
+
+    this.addSlot(new ResultSlot(player, this.craftSlots, this.resultSlots, 0, 80,53));
   }
 }
