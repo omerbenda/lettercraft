@@ -15,7 +15,9 @@ public class ModMenuTypes {
       DeferredRegister.create(ForgeRegistries.MENU_TYPES, LetterCraftMod.MOD_ID);
 
   public static final RegistryObject<MenuType<LetterCombinerMenu>> LETTER_COMBINER_MENU =
-      registerMenuType(LetterCombinerMenu::new, "letter_combiner_menu");
+      registerMenuType(
+          (pContainerId, inv, friendlyByteBuf) -> new LetterCombinerMenu(pContainerId, inv),
+          "letter_combiner_menu");
 
   private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(
       IContainerFactory<T> factory, String name) {

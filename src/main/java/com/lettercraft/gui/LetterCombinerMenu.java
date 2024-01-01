@@ -1,31 +1,25 @@
 package com.lettercraft.gui;
 
 import com.lettercraft.block.ModBlocks;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 public class LetterCombinerMenu extends AbstractContainerMenu {
-  private final Level level;
-  private final BlockPos blockPos;
+  private final ContainerLevelAccess access;
 
-  public LetterCombinerMenu(
-      int pContainerId, Inventory pPlayerInventory, FriendlyByteBuf pExtraData) {
-    this(pContainerId, pPlayerInventory, pExtraData.readBlockPos());
+  public LetterCombinerMenu(int pContainerId, Inventory pPlayerInventory) {
+    this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL);
   }
 
-  public LetterCombinerMenu(int pContainerId, Inventory pPlayerInventory, BlockPos pBlockPos) {
+  public LetterCombinerMenu(
+      int pContainerId, Inventory pPlayerInventory, ContainerLevelAccess pAccess) {
     super(ModMenuTypes.LETTER_COMBINER_MENU.get(), pContainerId);
 
-    this.level = pPlayerInventory.player.level;
-    this.blockPos = pBlockPos;
-
+    this.access = pAccess;
     addInventorySlots(pPlayerInventory);
     addHotbarSlots(pPlayerInventory);
   }
@@ -37,8 +31,7 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
 
   @Override
   public boolean stillValid(Player pPlayer) {
-    return stillValid(
-        ContainerLevelAccess.create(level, blockPos), pPlayer, ModBlocks.LETTER_COMBINER.get());
+    return stillValid(this.access, pPlayer, ModBlocks.LETTER_COMBINER.get());
   }
 
   private void addInventorySlots(Inventory pPlayerInventory) {

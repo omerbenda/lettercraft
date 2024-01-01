@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,7 +47,8 @@ public class LetterCombinerBlock extends Block {
   public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
     return new SimpleMenuProvider(
         (pContainerId, pPlayerInventory, pPlayer) ->
-            new LetterCombinerMenu(pContainerId, pPlayerInventory, pPos),
+            new LetterCombinerMenu(
+                pContainerId, pPlayerInventory, ContainerLevelAccess.create(pLevel, pPos)),
         CONTAINER_TITLE);
   }
 }
