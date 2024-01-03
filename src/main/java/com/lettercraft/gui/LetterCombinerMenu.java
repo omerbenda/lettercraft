@@ -78,10 +78,9 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
   }
 
   private void setResultItem() {
-    if (!player.level.isClientSide()) {
+    if (!player.level.isClientSide() && !craftSlots.isEmpty()) {
       int craftContainerSize = craftSlots.getContainerSize();
       StringBuilder builder = new StringBuilder();
-      boolean hasLetters = false;
       int startIndex = -1;
       int endIndex = -1;
 
@@ -99,25 +98,17 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
 
       for (int index = startIndex; index <= endIndex; index++) {
         Item item = craftSlots.getItem(index).getItem();
-
-        if (item != Items.AIR) {
-          builder.append(ForgeRegistries.ITEMS.getKey(item).getPath());
-          hasLetters = true;
-        } else {
-          builder.append('_');
-        }
+        builder.append(item == Items.AIR ? '_' : ForgeRegistries.ITEMS.getKey(item).getPath());
       }
 
-      if (hasLetters) {
-        String resultString = "minecraft:" + builder;
+      String resultString = "minecraft:" + builder;
 
-        if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(resultString))) {
-          this.resultSlots.setItem(
-              0,
-              new ItemStack(
-                  RegistryObject.create(new ResourceLocation(resultString), ForgeRegistries.ITEMS)
-                      .get()));
-        }
+      if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(resultString))) {
+        this.resultSlots.setItem(
+            0,
+            new ItemStack(
+                RegistryObject.create(new ResourceLocation(resultString), ForgeRegistries.ITEMS)
+                    .get()));
       }
     }
   }
