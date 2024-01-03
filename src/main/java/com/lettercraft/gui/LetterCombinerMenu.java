@@ -78,7 +78,10 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
   }
 
   private void setResultItem() {
-    if (!player.level.isClientSide() && !craftSlots.isEmpty()) {
+    if (player.level.isClientSide()) {
+    } else if (craftSlots.isEmpty()) {
+      this.resultSlots.setItem(0, new ItemStack(Items.AIR));
+    } else {
       int craftContainerSize = craftSlots.getContainerSize();
       StringBuilder builder = new StringBuilder();
       int startIndex = -1;
@@ -109,6 +112,8 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
             new ItemStack(
                 RegistryObject.create(new ResourceLocation(resultString), ForgeRegistries.ITEMS)
                     .get()));
+      } else {
+        this.resultSlots.setItem(0, new ItemStack(Items.AIR));
       }
     }
   }
