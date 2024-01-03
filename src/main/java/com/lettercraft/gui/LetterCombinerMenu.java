@@ -1,10 +1,16 @@
 package com.lettercraft.gui;
 
 import com.lettercraft.block.ModBlocks;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class LetterCombinerMenu extends AbstractContainerMenu {
   private final CraftingContainer craftSlots = new CraftingContainer(this, 9, 1);
@@ -37,6 +43,13 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     return stillValid(this.access, pPlayer, ModBlocks.LETTER_COMBINER.get());
   }
 
+  @Override
+  public void slotsChanged(Container pContainer) {
+    super.slotsChanged(pContainer);
+
+    this.access.execute((pLevel, pPos) -> setResultItem());
+  }
+
   private void addInventorySlots(Inventory pPlayerInventory) {
     for (int y = 0; y < 3; ++y) {
       for (int x = 0; x < 9; ++x) {
@@ -61,6 +74,48 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
       }
     }
 
-    this.addSlot(new ResultSlot(player, this.craftSlots, this.resultSlots, 0, 80,53));
+    this.addSlot(new ResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 53));
+  }
+
+  private void setResultItem() {
+    int craftContainerSize = craftSlots.getContainerSize();
+    StringBuilder builder = new StringBuilder();
+    boolean hasLetters = false;
+    int startIndex = -1;
+    int endIndex = -1;
+
+    for (int index = 0; index < craftContainerSize; index++) {
+      Item item = craftSlots.getItem(index).getItem();
+
+      if (item != Items.AIR) {
+        if (startIndex == -1) {
+          startIndex = index;
+        }
+
+        endIndex = index;
+      }
+    }
+
+    for (int index = startIndex; index <= endIndex; index++) {
+      Item item = craftSlots.getItem(index).getItem();
+
+      if (item != Items.AIR) {
+        builder.append(ForgeRegistries.ITEMS.getKey(item).getPath());
+        hasLetters = true;
+      } else {
+        builder.append('_');
+      }
+    }
+
+    if (hasLetters) {
+      String resultString = builder.toString();
+
+      this.resultSlots.setItem(
+          0,
+          new ItemStack(
+              RegistryObject.create(
+                      new ResourceLocation("minecraft:" + resultString), ForgeRegistries.ITEMS)
+                  .get()));
+    }
   }
 }
