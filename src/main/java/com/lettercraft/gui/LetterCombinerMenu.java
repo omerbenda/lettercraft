@@ -78,44 +78,46 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
   }
 
   private void setResultItem() {
-    int craftContainerSize = craftSlots.getContainerSize();
-    StringBuilder builder = new StringBuilder();
-    boolean hasLetters = false;
-    int startIndex = -1;
-    int endIndex = -1;
+    if (!player.level.isClientSide()) {
+      int craftContainerSize = craftSlots.getContainerSize();
+      StringBuilder builder = new StringBuilder();
+      boolean hasLetters = false;
+      int startIndex = -1;
+      int endIndex = -1;
 
-    for (int index = 0; index < craftContainerSize; index++) {
-      Item item = craftSlots.getItem(index).getItem();
+      for (int index = 0; index < craftContainerSize; index++) {
+        Item item = craftSlots.getItem(index).getItem();
 
-      if (item != Items.AIR) {
-        if (startIndex == -1) {
-          startIndex = index;
+        if (item != Items.AIR) {
+          if (startIndex == -1) {
+            startIndex = index;
+          }
+
+          endIndex = index;
         }
-
-        endIndex = index;
       }
-    }
 
-    for (int index = startIndex; index <= endIndex; index++) {
-      Item item = craftSlots.getItem(index).getItem();
+      for (int index = startIndex; index <= endIndex; index++) {
+        Item item = craftSlots.getItem(index).getItem();
 
-      if (item != Items.AIR) {
-        builder.append(ForgeRegistries.ITEMS.getKey(item).getPath());
-        hasLetters = true;
-      } else {
-        builder.append('_');
+        if (item != Items.AIR) {
+          builder.append(ForgeRegistries.ITEMS.getKey(item).getPath());
+          hasLetters = true;
+        } else {
+          builder.append('_');
+        }
       }
-    }
 
-    if (hasLetters) {
-      String resultString = builder.toString();
+      if (hasLetters) {
+        String resultString = builder.toString();
 
-      this.resultSlots.setItem(
-          0,
-          new ItemStack(
-              RegistryObject.create(
-                      new ResourceLocation("minecraft:" + resultString), ForgeRegistries.ITEMS)
-                  .get()));
+        this.resultSlots.setItem(
+            0,
+            new ItemStack(
+                RegistryObject.create(
+                        new ResourceLocation("minecraft:" + resultString), ForgeRegistries.ITEMS)
+                    .get()));
+      }
     }
   }
 }
