@@ -109,14 +109,15 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
       }
 
       if (hasLetters) {
-        String resultString = builder.toString();
+        String resultString = "minecraft:" + builder;
 
-        this.resultSlots.setItem(
-            0,
-            new ItemStack(
-                RegistryObject.create(
-                        new ResourceLocation("minecraft:" + resultString), ForgeRegistries.ITEMS)
-                    .get()));
+        if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(resultString))) {
+          this.resultSlots.setItem(
+              0,
+              new ItemStack(
+                  RegistryObject.create(new ResourceLocation(resultString), ForgeRegistries.ITEMS)
+                      .get()));
+        }
       }
     }
   }
