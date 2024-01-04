@@ -50,6 +50,12 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     this.access.execute((pLevel, pPos) -> setResultItem());
   }
 
+  @Override
+  public void removed(Player pPlayer) {
+    super.removed(pPlayer);
+    this.access.execute((p_39371_, p_39372_) -> this.clearContainer(pPlayer, this.craftSlots));
+  }
+
   private void addInventorySlots(Inventory pPlayerInventory) {
     for (int y = 0; y < 3; ++y) {
       for (int x = 0; x < 9; ++x) {
