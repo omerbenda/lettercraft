@@ -3,6 +3,10 @@ Lettercraft is a mod adding the ability to turn items into letters and to combin
 ---
 Lettercraft lets you combine both items and letters into different items (for example using sand and stone to create sandstone)
 
+##### [Recipes](https://github.com/omerbenda/lettercraft/wiki)
+
+---
+
 <p align="center">
 <img src="https://github.com/omerbenda/lettercraft/assets/34948058/31c79967-ffad-4260-be6b-53f9435eb7b1">
 </p>
