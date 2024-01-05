@@ -1,6 +1,7 @@
 package com.lettercraft.gui;
 
 import com.lettercraft.block.ModBlocks;
+import com.lettercraft.data.slot.LetterCombinerResultSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -80,7 +81,8 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
       }
     }
 
-    this.addSlot(new ResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 53));
+    this.addSlot(
+        new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 53));
   }
 
   private void setResultItem() {
