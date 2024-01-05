@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,14 +33,15 @@ public class LetterExtractorBlock extends Block {
       InteractionHand pHand,
       BlockHitResult pHit) {
     if (pHand == InteractionHand.MAIN_HAND) {
-      ItemStack useItem = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
+      ItemStack useItemStack = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
+      Item useItem = useItemStack.getItem();
 
-      if (useItem.getItem() != Items.AIR) {
-        String itemName = useItem.getHoverName().getString().toLowerCase();
+      if (useItem != Items.AIR) {
+        String itemName = ForgeRegistries.ITEMS.getKey(useItem).getPath();
         SpawnLetters(pLevel, pPos, countLetters(itemName));
 
         if (!pPlayer.isCreative()) {
-          useItem.setCount(useItem.getCount() - 1);
+          useItemStack.setCount(useItemStack.getCount() - 1);
         }
 
         return InteractionResult.SUCCESS;
@@ -54,7 +56,10 @@ public class LetterExtractorBlock extends Block {
 
     for (int index = 0; index < word.length(); index++) {
       char letter = word.charAt(index);
-      lettersList.put(letter, lettersList.getOrDefault(letter, 0) + 1);
+
+      if (letter != '_') {
+        lettersList.put(letter, lettersList.getOrDefault(letter, 0) + 1);
+      }
     }
 
     return lettersList;

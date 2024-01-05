@@ -21,6 +21,6 @@ public class ModCreativeModeTabs {
             builder ->
                 builder
                     .icon(() -> new ItemStack(ModItems.LETTER_A.get()))
-                    .title(Component.translatable("creativetab.lettercraft.lettercrafttabtitle")));
+                    .title(Component.translatable("creativetab.lettercraft.lettercrafttab_title")));
   }
 }
