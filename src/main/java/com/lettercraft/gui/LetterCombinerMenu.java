@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class LetterCombinerMenu extends AbstractContainerMenu {
-  private final CraftingContainer craftSlots = new CraftingContainer(this, 9, 1);
+  private final CraftingContainer craftSlots = new CraftingContainer(this, 9, 2);
   private final ResultContainer resultSlots = new ResultContainer();
   private final ContainerLevelAccess access;
   private final Player player;
@@ -82,7 +82,7 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     }
 
     this.addSlot(
-        new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 53));
+        new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 61));
   }
 
   private void setResultItem() {
