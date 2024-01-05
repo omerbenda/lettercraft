@@ -10,8 +10,12 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
 
 public class LetterCombinerMenu extends AbstractContainerMenu {
   private final CraftingContainer craftSlots = new CraftingContainer(this, 9, 2);
@@ -101,6 +105,20 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     this.access.execute((pLevel, pPos) -> this.clearContainer(pPlayer, this.craftSlots));
   }
 
+  private void addCraftingSlots() {
+    this.addSlot(
+        new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 61));
+
+    int width = this.craftSlots.getWidth();
+    int height = this.craftSlots.getHeight();
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        this.addSlot(new Slot(this.craftSlots, x + y * width, 8 + x * 18, 20 + y * 18));
+      }
+    }
+  }
+
   private void addInventorySlots(Inventory pPlayerInventory) {
     for (int y = 0; y < 3; ++y) {
       for (int x = 0; x < 9; ++x) {
@@ -115,24 +133,10 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
     }
   }
 
-  private void addCraftingSlots() {
-    this.addSlot(
-            new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 61));
-
-    int width = this.craftSlots.getWidth();
-    int height = this.craftSlots.getHeight();
-
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        this.addSlot(new Slot(this.craftSlots, x + y * width, 8 + x * 18, 20 + y * 18));
-      }
-    }
-  }
-
   private void setResultItem() {
     if (player.level.isClientSide()) {
     } else if (craftSlots.isEmpty()) {
-      this.resultSlots.setItem(0, new ItemStack(Items.AIR));
+      this.resultSlots.setItem(0, ItemStack.EMPTY);
     } else {
       int craftContainerSize = craftSlots.getContainerSize();
       StringBuilder builder = new StringBuilder();
@@ -156,17 +160,23 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
         builder.append(item == Items.AIR ? '_' : ForgeRegistries.ITEMS.getKey(item).getPath());
       }
 
-      String resultString = "minecraft:" + builder;
+      String resultString = builder.toString();
+      Item resultItem = getItemInMods(resultString);
+      this.resultSlots.setItem(0, new ItemStack(resultItem));
+    }
+  }
 
-      if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(resultString))) {
-        this.resultSlots.setItem(
-            0,
-            new ItemStack(
-                RegistryObject.create(new ResourceLocation(resultString), ForgeRegistries.ITEMS)
-                    .get()));
-      } else {
-        this.resultSlots.setItem(0, new ItemStack(Items.AIR));
+  private Item getItemInMods(String resourceName) {
+    List<IModInfo> mods = ModList.get().getMods();
+
+    for (IModInfo modInfo : mods) {
+      ResourceLocation location = new ResourceLocation(modInfo.getModId(), resourceName);
+
+      if (ForgeRegistries.ITEMS.containsKey(location)) {
+        return RegistryObject.create(location, ForgeRegistries.ITEMS).get();
       }
     }
+
+    return Items.AIR;
   }
 }
