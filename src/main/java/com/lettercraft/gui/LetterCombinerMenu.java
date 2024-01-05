@@ -29,14 +29,58 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
 
     this.access = pAccess;
     this.player = pPlayerInventory.player;
+    addCraftingSlots();
     addInventorySlots(pPlayerInventory);
     addHotbarSlots(pPlayerInventory);
-    addCraftingSlots();
   }
 
   @Override
   public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
-    return null;
+    ItemStack itemStack = ItemStack.EMPTY;
+    Slot slot = this.slots.get(pIndex);
+
+    if (slot.hasItem()) {
+      ItemStack slotItemStack = slot.getItem();
+      itemStack = slotItemStack.copy();
+
+      if (pIndex == 0) {
+        this.access.execute(
+            (pLevel, pPos) -> slotItemStack.getItem().onCraftedBy(slotItemStack, pLevel, pPlayer));
+
+        if (!this.moveItemStackTo(slotItemStack, 19, 55, true)) {
+          return ItemStack.EMPTY;
+        }
+      } else if (pIndex >= 19 && pIndex < 55) {
+        if (!this.moveItemStackTo(slotItemStack, 1, 19, false)) {
+          if (pIndex < 37) {
+            if (!this.moveItemStackTo(slotItemStack, 46, 55, false)) {
+              return ItemStack.EMPTY;
+            }
+          } else if (!this.moveItemStackTo(slotItemStack, 19, 46, false)) {
+            return ItemStack.EMPTY;
+          }
+        }
+      } else if (!this.moveItemStackTo(slotItemStack, 19, 55, false)) {
+        return ItemStack.EMPTY;
+      }
+
+      if (slotItemStack.isEmpty()) {
+        slot.setByPlayer(ItemStack.EMPTY);
+      } else {
+        slot.setChanged();
+      }
+
+      if (slotItemStack.getCount() == itemStack.getCount()) {
+        return ItemStack.EMPTY;
+      }
+
+      slot.onTake(pPlayer, slotItemStack);
+      if (pIndex == 0) {
+        pPlayer.drop(slotItemStack, false);
+      }
+    }
+
+    return itemStack;
   }
 
   @Override
@@ -54,7 +98,7 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
   @Override
   public void removed(Player pPlayer) {
     super.removed(pPlayer);
-    this.access.execute((p_39371_, p_39372_) -> this.clearContainer(pPlayer, this.craftSlots));
+    this.access.execute((pLevel, pPos) -> this.clearContainer(pPlayer, this.craftSlots));
   }
 
   private void addInventorySlots(Inventory pPlayerInventory) {
@@ -72,6 +116,9 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
   }
 
   private void addCraftingSlots() {
+    this.addSlot(
+            new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 61));
+
     int width = this.craftSlots.getWidth();
     int height = this.craftSlots.getHeight();
 
@@ -80,9 +127,6 @@ public class LetterCombinerMenu extends AbstractContainerMenu {
         this.addSlot(new Slot(this.craftSlots, x + y * width, 8 + x * 18, 20 + y * 18));
       }
     }
-
-    this.addSlot(
-        new LetterCombinerResultSlot(player, this.craftSlots, this.resultSlots, 0, 80, 61));
   }
 
   private void setResultItem() {
