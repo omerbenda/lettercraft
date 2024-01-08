@@ -26,43 +26,9 @@ public class LetterCraftMod {
     ModMenuTypes.register(modEventBus);
     modEventBus.addListener(this::commonSetup);
     MinecraftForge.EVENT_BUS.register(this);
-    //modEventBus.addListener(this::addCreative);
   }
 
   private void commonSetup(final FMLCommonSetupEvent event) {}
-
-  //private void addCreative(CreativeModeTabEvent.BuildContents event) {
-  //  if (event.getTab().equals(ModCreativeModeTabs.LETTERCRAFT_TAB)) {
-  //    event.accept(ModBlocks.LETTER_EXTRACTOR);
-  //    event.accept(ModBlocks.LETTER_COMBINER);
-  //    event.accept(ModItems.LETTER_A);
-  //    event.accept(ModItems.LETTER_B);
-  //    event.accept(ModItems.LETTER_C);
-  //    event.accept(ModItems.LETTER_D);
-  //    event.accept(ModItems.LETTER_E);
-  //    event.accept(ModItems.LETTER_F);
-  //    event.accept(ModItems.LETTER_G);
-  //    event.accept(ModItems.LETTER_H);
-  //    event.accept(ModItems.LETTER_I);
-  //    event.accept(ModItems.LETTER_J);
-  //    event.accept(ModItems.LETTER_K);
-  //    event.accept(ModItems.LETTER_L);
-  //    event.accept(ModItems.LETTER_M);
-  //    event.accept(ModItems.LETTER_N);
-  //    event.accept(ModItems.LETTER_O);
-  //    event.accept(ModItems.LETTER_P);
-  //    event.accept(ModItems.LETTER_Q);
-  //    event.accept(ModItems.LETTER_R);
-  //    event.accept(ModItems.LETTER_S);
-  //    event.accept(ModItems.LETTER_T);
-  //    event.accept(ModItems.LETTER_U);
-  //    event.accept(ModItems.LETTER_V);
-  //    event.accept(ModItems.LETTER_W);
-  //    event.accept(ModItems.LETTER_X);
-  //    event.accept(ModItems.LETTER_Y);
-  //    event.accept(ModItems.LETTER_Z);
-  //  }
-  //}
 
   @SubscribeEvent
   public void onServerStarting(ServerStartingEvent event) {}
