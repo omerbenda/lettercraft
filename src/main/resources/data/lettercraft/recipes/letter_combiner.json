@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#P#",
+    "SRS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "lettercraft:letter_combiner",
+    "count": 1
+  }
+}

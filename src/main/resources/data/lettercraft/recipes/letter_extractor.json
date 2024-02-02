@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "minecraft:signs"
+    },
+    "b": {
+      "item": "minecraft:stone_bricks"
+    }
+  },
+  "pattern": [
+    "PbP",
+    "bSb",
+    "PbP"
+  ],
+  "result": {
+    "item": "lettercraft:letter_extractor"
+  },
+  "show_notification": true
+}
