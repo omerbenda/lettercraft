@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "lettercraft:block/letter_combiner"
+    }
+  }
+}
