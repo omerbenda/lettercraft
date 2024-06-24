@@ -9,7 +9,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 
 public class LetterCombinerResultSlot extends Slot {
@@ -73,29 +72,37 @@ public class LetterCombinerResultSlot extends Slot {
   @Override
   public void onTake(Player pPlayer, ItemStack pStack) {
     this.checkTakeAchievements(pStack);
+    CraftingInput.Positioned positionedCraftInput = this.craftSlots.asPositionedCraftInput();
+    CraftingInput craftinginput = positionedCraftInput.input();
+    int i = positionedCraftInput.left();
+    int j = positionedCraftInput.top();
     ForgeHooks.setCraftingPlayer(pPlayer);
-    CraftingInput craftinginput = this.craftSlots.asCraftInput();
-    Level level = pPlayer.level();
-    NonNullList<ItemStack> remainingItems =
-        level.getRecipeManager().getRemainingItemsFor(RecipeType.CRAFTING, craftinginput, level);
+    NonNullList<ItemStack> nonnulllist =
+        pPlayer
+            .level()
+            .getRecipeManager()
+            .getRemainingItemsFor(RecipeType.CRAFTING, craftinginput, pPlayer.level());
     ForgeHooks.setCraftingPlayer(null);
 
-    for (int index = 0; index < remainingItems.size(); ++index) {
-      ItemStack itemStack = this.craftSlots.getItem(index);
-      ItemStack remainingStack = remainingItems.get(index);
+    for (int k = 0; k < craftinginput.height(); ++k) {
+      for (int l = 0; l < craftinginput.width(); ++l) {
+        int i1 = l + i + (k + j) * this.craftSlots.getWidth();
+        ItemStack slotItem = this.craftSlots.getItem(i1);
+        ItemStack listItem = nonnulllist.get(l + k * craftinginput.width());
 
-      if (!itemStack.isEmpty()) {
-        this.craftSlots.removeItem(index, 1);
-        itemStack = this.craftSlots.getItem(index);
-      }
+        if (!slotItem.isEmpty()) {
+          this.craftSlots.removeItem(i1, 1);
+          slotItem = this.craftSlots.getItem(i1);
+        }
 
-      if (!remainingStack.isEmpty()) {
-        if (itemStack.isEmpty()) {
-          this.craftSlots.setItem(index, remainingStack);
-        } else if (ItemStack.isSameItem(itemStack, remainingStack)
-            && ItemStack.isSameItemSameComponents(itemStack, remainingStack)) {
-        } else if (!this.player.getInventory().add(remainingStack)) {
-          this.player.drop(remainingStack, false);
+        if (!listItem.isEmpty()) {
+          if (slotItem.isEmpty()) {
+            this.craftSlots.setItem(i1, listItem);
+          } else if (ItemStack.isSameItemSameComponents(slotItem, listItem)) {
+            this.craftSlots.setItem(i1, listItem);
+          } else if (!this.player.getInventory().add(listItem)) {
+            this.player.drop(listItem, false);
+          }
         }
       }
     }
