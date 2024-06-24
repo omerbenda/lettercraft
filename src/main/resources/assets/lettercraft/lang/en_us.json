@@ -1,0 +1,35 @@
+{
+  "item.lettercraft.a": "A",
+  "item.lettercraft.b": "B",
+  "item.lettercraft.c": "C",
+  "item.lettercraft.d": "D",
+  "item.lettercraft.e": "E",
+  "item.lettercraft.f": "F",
+  "item.lettercraft.g": "G",
+  "item.lettercraft.h": "H",
+  "item.lettercraft.i": "I",
+  "item.lettercraft.j": "J",
+  "item.lettercraft.k": "K",
+  "item.lettercraft.l": "L",
+  "item.lettercraft.m": "M",
+  "item.lettercraft.n": "N",
+  "item.lettercraft.o": "O",
+  "item.lettercraft.p": "P",
+  "item.lettercraft.q": "Q",
+  "item.lettercraft.r": "R",
+  "item.lettercraft.s": "S",
+  "item.lettercraft.t": "T",
+  "item.lettercraft.u": "U",
+  "item.lettercraft.v": "V",
+  "item.lettercraft.w": "W",
+  "item.lettercraft.x": "X",
+  "item.lettercraft.y": "Y",
+  "item.lettercraft.z": "Z",
+
+  "block.lettercraft.letter_extractor": "Letter Extractor",
+  "block.lettercraft.letter_combiner": "Letter Combiner",
+
+  "creativetab.lettercraft.lettercrafttab_title": "Lettercraft",
+
+  "container.lettercraft.letter_combiner_title": "Letter Combiner"
+}
